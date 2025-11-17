@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Princess Day, Mahi 👑</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ffd1dc 0%, #ffb6c1 50%, #dda0dd 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 20s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 4s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        .envelope-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            cursor: pointer;
+            animation: envelopeBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes envelopeBounce {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+            50% { transform: translate(-50%, -50%) translateY(-15px); }
+        }
+
+        .envelope {
+            width: 350px;
+            height: 250px;
+            position: relative;
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 15px 35px rgba(255, 105, 180, 0.4));
+        }
+
+        .envelope:hover {
+            transform: scale(1.08);
+        }
+
+        .envelope-body {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fff 0%, #fffafa 100%);
+            border-radius: 15px;
+            box-shadow: 0 15px 50px rgba(186, 85, 211, 0.4);
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #ffb6c1;
+        }
+
+        .envelope-decoration {
+            position: absolute;
+            font-size: 40px;
+            opacity: 0.3;
+        }
+
+        .deco1 { top: 10px; left: 15px; }
+        .deco2 { top: 10px; right: 15px; }
+        .deco3 { bottom: 15px; left: 20px; }
+        .deco4 { bottom: 15px; right: 20px; }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 55%;
+            background: linear-gradient(135deg, #ffb6c1 0%, #ffc0cb 50%, #ffb6c1 100%);
+            transform-origin: top;
+            transition: transform 1s ease;
+            clip-path: polygon(0 0, 50% 100%, 100% 0);
+            z-index: 3;
+            border: 3px solid #ff69b4;
+            border-bottom: none;
+        }
+
+        .envelope-seal {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border-radius: 50%;
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
+            border: 3px solid #ffb347;
+            animation: sealGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes sealGlow {
+            0%, 100% { box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5); }
+            50% { box-shadow: 0 5px 30px rgba(255, 215, 0, 0.8); }
+        }
+
+        .envelope-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 100%);
+            border-radius: 15px;
+            border: 3px solid #ff69b4;
+        }
+
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        .envelope.open .envelope-seal {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0);
+            transition: all 0.5s ease;
+        }
+
+        .tap-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.6em;
+            color: #c71585;
+            text-align: center;
+            z-index: 2;
+            animation: pulse 2s ease-in-out infinite;
+            pointer-events: none;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.08); }
+        }
+
+        .music-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #ffb6c1;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(186, 85, 211, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .music-toggle.playing {
+            animation: musicPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes musicPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .container {
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 30px;
+            padding: 60px 50px;
+            box-shadow: 0 25px 70px rgba(186, 85, 211, 0.4);
+            position: relative;
+            border: 3px solid rgba(255, 192, 203, 0.5);
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(40px) scale(0.9);
+            pointer-events: none;
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .container.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .crown-container {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .crown {
+            font-size: 70px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .title-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #c71585;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            animation: slideIn 1s ease-out 0.3s both;
+            text-shadow: 2px 2px 4px rgba(199, 21, 133, 0.2);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .letter {
+            color: #333;
+            line-height: 1.9;
+            font-size: 1.15em;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out 0.8s both;
+        }
+
+        .letter p {
+            margin-bottom: 22px;
+            animation: slideInLeft 0.8s ease-out both;
+        }
+
+        .letter p:nth-child(1) { animation-delay: 1s; }
+        .letter p:nth-child(2) { animation-delay: 1.2s; }
+        .letter p:nth-child(3) { animation-delay: 1.4s; }
+        .letter p:nth-child(4) { animation-delay: 1.6s; }
+        .letter p:nth-child(5) { animation-delay: 1.8s; }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .signature {
+            text-align: right;
+            font-style: italic;
+            margin-top: 50px;
+            color: #c71585;
+            font-size: 1.3em;
+            animation: fadeIn 1s ease-out 2s both;
+        }
+
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            animation: floatUp 8s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-150px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: linear-gradient(45deg, #ffd700, #ffff00);
+            border-radius: 50%;
+            animation: sparkleAnim 1.5s infinite;
+            box-shadow: 0 0 8px #ffd700;
+        }
+
+        @keyframes sparkleAnim {
+            0%, 100% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2) rotate(180deg);
+                opacity: 1;
+            }
+        }
+
+        .floating-emoji {
+            position: absolute;
+            font-size: 30px;
+            animation: floatAround 12s ease-in-out infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes floatAround {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(15px, -15px) rotate(5deg);
+            }
+            50% {
+                transform: translate(-10px, -10px) rotate(-5deg);
+            }
+            75% {
+                transform: translate(8px, 12px) rotate(3deg);
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="hearts" id="hearts"></div>
+
+    <div class="envelope-wrapper" id="envelopeWrapper">
+        <div class="envelope" id="envelope">
+            <div class="envelope-back"></div>
+            <div class="envelope-body">
+                <div class="envelope-decoration deco1">✨</div>
+                <div class="envelope-decoration deco2">💖</div>
+                <div class="envelope-decoration deco3">🌸</div>
+                <div class="envelope-decoration deco4">✨</div>
+                <div class="tap-text">👑<br>Tap to Open<br>💌</div>
+            </div>
+            <div class="envelope-flap"></div>
+            <div class="envelope-seal">💝</div>
+        </div>
+    </div>
+
+    <div class="music-toggle" id="musicToggle" title="Toggle Music">🎵</div>
+
+    <!-- Audio Elements -->
+    <audio id="bgMusic" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_4a358a8858.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="openSound">
+        <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_12b0c7443c.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="sparkleSound">
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_13a91f6e16.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container" id="container">
+        <div class="crown-container">
+            <div class="crown">👑</div>
+        </div>
+        
+        <div class="title-container">
+            <h1>Happy Princess Day ❤️</h1>
+        </div>
+        
+        <div class="letter">
+            <p>I know we haven't met yet, but I still wanted today to remind you of something simple and true. You make my days lighter just by being you.</p>
+            
+            <p>Thank you for being there for me, for listening to all my yapping, for handling my flirting with that cute patience of yours, and for being so understanding through everything. One of the best parts of my day is hearing your voice notes and seeing the photos or videos you send. It genuinely feels like I can talk to you about anything, without holding back.</p>
+            
+            <p>I hope today makes you feel cherished, adored, and a little extra special… the same way your messages make me feel every single day.</p>
+            
+            <p>Until I finally get to see your face and say all this in person, I'm sending you all my affection wrapped in this little note.</p>
+            
+            <p><strong>Happy Princess Day, Mahi.</strong></p>
+        </div>
+        
+        <div class="signature">
+            — Aryan 🩷✨
+        </div>
+
+        <div class="floating-emoji" style="top: 10%; left: 5%; animation-delay: 0s;">💕</div>
+        <div class="floating-emoji" style="top: 15%; right: 8%; animation-delay: 3s;">✨</div>
+        <div class="floating-emoji" style="bottom: 12%; left: 10%; animation-delay: 6s;">🌸</div>
+        <div class="floating-emoji" style="bottom: 18%; right: 5%; animation-delay: 9s;">💖</div>
+    </div>
+
+    <script>
+        // Create twinkling stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 50; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 4 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // Create floating hearts
+        const heartsContainer = document.getElementById('hearts');
+        const heartEmojis = ['💖', '💕', '💗', '🩷'];
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 6) + 's';
+            heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
+            heartsContainer.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 8000);
+        }, 1000);
+
+        // Audio elements
+        const bgMusic = document.getElementById('bgMusic');
+        const openSound = document.getElementById('openSound');
+        const sparkleSound = document.getElementById('sparkleSound');
+        const musicToggle = document.getElementById('musicToggle');
+        
+        let isMusicPlaying = false;
+
+        // Music toggle functionality
+        musicToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicToggle.textContent = '🔇';
+                musicToggle.classList.remove('playing');
+            } else {
+                bgMusic.play().catch(err => console.log('Audio play failed:', err));
+                musicToggle.textContent = '🎵';
+                musicToggle.classList.add('playing');
+            }
+            isMusicPlaying = !isMusicPlaying;
+        });
+
+        // Set initial volume
+        bgMusic.volume = 0.3;
+        openSound.volume = 0.5;
+        sparkleSound.volume = 0.3;
+
+        // Envelope opening functionality
+        const envelopeWrapper = document.getElementById('envelopeWrapper');
+        const envelope = document.getElementById('envelope');
+        const container = document.getElementById('container');
+
+        envelopeWrapper.addEventListener('click', () => {
+            // Play opening sound
+            openSound.play().catch(err => console.log('Sound play failed:', err));
+            
+            // Start background music if not already playing
+            if (!isMusicPlaying) {
+                bgMusic.play().catch(err => console.log('Music play failed:', err));
+                musicToggle.textContent = '🎵';
+                musicToggle.classList.add('playing');
+                isMusicPlaying = true;
+            }
+            
+            envelope.classList.add('open');
+            
+            setTimeout(() => {
+                envelopeWrapper.style.opacity = '0';
+                envelopeWrapper.style.transform = 'translate(-50%, -50%) scale(0.8)';
+                envelopeWrapper.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                
+                setTimeout(() => {
+                    envelopeWrapper.classList.add('hidden');
+                    container.classList.add('show');
+                    
+                    // Play sparkle sound when letter appears
+                    sparkleSound.play().catch(err => console.log('Sound play failed:', err));
+                    
+                    // Create sparkles around the container
+                    setInterval(() => {
+                        const sparkle = document.createElement('div');
+                        sparkle.className = 'sparkle';
+                        sparkle.style.left = Math.random() * 100 + '%';
+                        sparkle.style.top = Math.random() * 100 + '%';
+                        container.appendChild(sparkle);
+                        
+                        setTimeout(() => sparkle.remove(), 1500);
+                    }, 300);
+                }, 500);
+            }, 1000);
+        });
+
+        // Add click sparkle effect (only after letter is open)
+        document.addEventListener('click', (e) => {
+            if (container.classList.contains('show') && e.target.id !== 'musicToggle') {
+                // Play quiet sparkle sound
+                const clickSparkle = sparkleSound.cloneNode();
+                clickSparkle.volume = 0.1;
+                clickSparkle.play().catch(err => console.log('Sound play failed:', err));
+                
+                for (let i = 0; i < 5; i++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.style.position = 'fixed';
+                    sparkle.style.left = e.clientX + (Math.random() * 30 - 15) + 'px';
+                    sparkle.style.top = e.clientY + (Math.random() * 30 - 15) + 'px';
+                    sparkle.style.animationDelay = (Math.random() * 0.2) + 's';
+                    document.body.appendChild(sparkle);
+                    
+                    setTimeout(() => sparkle.remove(), 1500);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
